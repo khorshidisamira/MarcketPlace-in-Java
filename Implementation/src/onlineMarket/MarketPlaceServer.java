@@ -19,11 +19,11 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 	public MarketPlaceServer() throws RemoteException, MalformedURLException, NotBoundException {
 		super();
 		try {
-			LocateRegistry.getRegistry(7777).list();
+			LocateRegistry.getRegistry(1099).list();
 		} catch (RemoteException e) {
-			LocateRegistry.createRegistry(7777);
+			LocateRegistry.createRegistry(1099);
 		}
-		Naming.rebind("rmi://localhost:7777/market", this);
+		Naming.rebind("rmi://localhost:1099/market", this);
 
 		// initialize Systems's Products
 		String[] names = new String[5];

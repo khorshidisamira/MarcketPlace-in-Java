@@ -1,4 +1,3 @@
-// Ryan: Missing Honor Pledge & Digital Signature.
 package onlineMarket;
 
 import java.net.MalformedURLException;
@@ -8,10 +7,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-
-// Ryan: Here you have a violation of the separation of concerns
-// as you are mixing application logic with framework functionality.
-// Instead you need to isolate the two from one another.
 
 @SuppressWarnings("serial")
 public class MarketPlaceServer extends UnicastRemoteObject implements ServerInterface {

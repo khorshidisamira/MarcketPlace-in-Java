@@ -1,9 +1,11 @@
 // Ryan: Missing Honor Pledge & Digital Signature.
-package onlineMarket;
-/**
- *
- * @author Samira
- */
+//Fixed:
+// Honor Pledge:
+//
+// I pledge that I have neither given nor received any help on this assignment.
+//
+// Samira Khorshidi
+
 public class ProductController {
 
 	private ProductModel model;

@@ -19,8 +19,7 @@ public class AdministratorFactory implements GUIFactory {
 	
     @Override
     public AdministratorUser createUser() {
-		
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		 
         return user;
     }
 

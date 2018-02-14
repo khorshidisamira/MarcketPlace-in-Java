@@ -1,5 +1,3 @@
-// Ryan: Missing Honor Pledge & Digital Signature.
-//Fixed:
 // Honor Pledge:
 //
 // I pledge that I have neither given nor received any help on this assignment.
@@ -13,12 +11,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
-// Ryan: Here you have a violation of the separation of concerns
-// as you are mixing application logic with framework functionality.
-// Instead you need to isolate the two from one another.
-
-//Fixed:
-//I added a new class called ServerController and now my functionalities are in that class
 @SuppressWarnings("serial")
 public class MarketPlaceServer extends UnicastRemoteObject implements ServerInterface {
 
@@ -61,20 +53,20 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 	/*
 	 * User functions
 	 */
-	public synchronized void loginAdmin(AdministratorController admin) throws RemoteException {
-		server.loginAdmin(admin);
+	public synchronized String loginAdmin(String username, String password) throws RemoteException {
+		return server.loginAdmin(username, password);
 	}
 
-	public synchronized void loginCustomer(CustomerController customer) throws RemoteException {
-		server.loginCustomer(customer);
+	public synchronized String loginCustomer(String username, String password) throws RemoteException {
+		return server.loginCustomer(username, password);
 	}
 
-	public synchronized void logoutAdmin(AdministratorController admin) throws RemoteException {
-		server.logoutAdmin(admin);
+	public synchronized void logoutAdmin() throws RemoteException {
+		server.logoutAdmin();
 	}
 
-	public synchronized void logoutCustomer(CustomerController customer) throws RemoteException {
-		server.logoutCustomer(customer);
+	public synchronized void logoutCustomer() throws RemoteException {
+		server.logoutCustomer();
 	}
 
 	public synchronized void updateCustomer(int customerIndex, String newPassword) throws RemoteException {
@@ -127,11 +119,13 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 		server.addToCart(username, productIndex, quantity);
 	}
 
-	public synchronized void showCartDetails(int cartIndex) throws RemoteException { 
+	public synchronized void showCartDetails(int cartIndex) throws RemoteException {
+		System.out.println("Show Cart Details");
 		server.showCartDetails(cartIndex);
 	}
 
-	public synchronized void checkoutCart(CartController cart) throws RemoteException { 
+	public synchronized void checkoutCart(CartController cart) throws RemoteException {
+		System.out.println("Checkout Cart");
 		server.checkoutCart(cart);
 	}
 

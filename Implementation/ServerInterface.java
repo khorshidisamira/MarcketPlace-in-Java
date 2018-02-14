@@ -1,5 +1,3 @@
-// Ryan: Missing Honor Pledge & Digital Signature.
-//Fixed:
 // Honor Pledge:
 //
 // I pledge that I have neither given nor received any help on this assignment.
@@ -25,13 +23,13 @@ public interface ServerInterface extends Remote {
 	/*
 	 * User functions
 	 */
-	public void loginAdmin(AdministratorController admin) throws RemoteException;
+	public String loginAdmin(String username, String password) throws RemoteException;
 
-	public void loginCustomer(CustomerController customer) throws RemoteException;
+	public String loginCustomer(String username, String password) throws RemoteException;
 
-	public void logoutAdmin(AdministratorController admin) throws RemoteException;
+	public void logoutAdmin() throws RemoteException;
 
-	public void logoutCustomer(CustomerController customer) throws RemoteException;
+	public void logoutCustomer() throws RemoteException;
 
 	public void updateCustomer(int customerIndex, String newPassword) throws RemoteException;
 

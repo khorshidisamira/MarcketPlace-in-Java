@@ -1,5 +1,3 @@
-// Ryan: Missing Honor Pledge & Digital Signature.
-//Fixed:
 // Honor Pledge:
 //
 // I pledge that I have neither given nor received any help on this assignment.
@@ -14,7 +12,9 @@ public class ServerController {
 	private ArrayList<AdministratorController> adminList = new ArrayList<>();// Holds all Admins 
 	private ArrayList<ProductController> productList = new ArrayList<>(); // Holds system's products
 	private ArrayList<CartController> cartList = new ArrayList<>(); // Holds system's carts per user
-
+	private Application app;
+    private GUIFactory factory;
+		
 	public ServerController() {
 		// initialize Systems's Products
 				String[] names = new String[5];
@@ -82,24 +82,47 @@ public class ServerController {
 	/*
 	 * User functions
 	 */
-	public void loginAdmin(AdministratorController admin) {
+	public String loginAdmin(String username, String password) { 
 		System.out.println("Admin Login");
 		
-		admin.login();
+		factory = new AdministratorFactory(username, password);				
+		app = new Application(factory); 
+		
+		LoginUser loginUserOrder = new LoginUser(app);
+		//SellStock sellStockOrder = new SellStock(abcStock);
+
+		Invoker invoker = new Invoker();
+		invoker.takeOrder(loginUserOrder);
+		//broker.takeOrder(sellStockOrder);
+
+		invoker.placeOrders(); 
+					
+		return "logged in";
 	}
-	public void loginCustomer(CustomerController customer) {
+	public String loginCustomer(String username, String password) {
 		System.out.println("Customer Login");
-		customer.login();
+		factory = new CustomerFactory(username, password);				
+		app = new Application(factory); 
+		
+		LoginUser loginUserOrder = new LoginUser(app);
+		//SellStock sellStockOrder = new SellStock(abcStock);
+
+		Invoker invoker = new Invoker();
+		invoker.takeOrder(loginUserOrder);
+		//broker.takeOrder(sellStockOrder);
+
+		invoker.placeOrders(); 
+		return "logged in";
 	}
 	
-	public void logoutAdmin(AdministratorController admin) {
+	public void logoutAdmin(/*AdministratorController admin*/) {
 		System.out.println("Admin logout");
 		
-		admin.logout();
+		//admin.logout();
 	}
-	public void logoutCustomer(CustomerController customer) {
+	public void logoutCustomer(/*CustomerController customer*/) {
 		System.out.println("Customer logout");
-		customer.logout();
+		//customer.logout();
 	}
 	
 	public void updateCustomer(int customerIndex, String newPassword) {

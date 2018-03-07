@@ -6,8 +6,9 @@
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class ServerController {
+public class ServerController implements Serializable{
 	private ArrayList<CustomerController> customerList = new ArrayList<>();// Holds all customers 
 	private ArrayList<AdministratorController> adminList = new ArrayList<>();// Holds all Admins 
 	private ArrayList<ProductController> productList = new ArrayList<>(); // Holds system's products
@@ -47,32 +48,56 @@ public class ServerController {
 				this.cartList.add(new CartController(customerCart));
 	}
 	
+	
+	public SessionController processLogin(String username, String password, String userType){
+		if(userType.equalsIgnoreCase("customer")){
+			System.out.println("Customer Login");
+			factory = new CustomerFactory(username, password);		
+		} else {
+			System.out.println("Admin Login");
+			factory = new AdministratorFactory(username, password);	
+		}
+				
+		app = new Application(factory); 
+		
+		LoginUser loginUserOrder = new LoginUser(app);
+		//SellStock sellStockOrder = new SellStock(abcStock);
+
+		Invoker invoker = new Invoker();
+		invoker.takeOrder(loginUserOrder);
+
+		invoker.placeOrders(); 
+		
+		SessionController session = new SessionController(userType);
+		return session;
+	} 
+	
 	/*
 	 * Administrator functions with User starts
 	 */
 
-	public CustomerController createCustomer(String username, String password) {
+	public CustomerController createCustomer(SessionController session, String username, String password) {
 
 		UserModel customerModel = new UserModel(username, password, "customer");
 
 		return new CustomerController(customerModel);
 	}
 
-	public AdministratorController createAdministrator(String username, String password) {
+	public AdministratorController createAdministrator(SessionController session, String username, String password) {
 
 		UserModel adminModel = new UserModel(username, password, "customer");
 
 		return new AdministratorController(adminModel);
 	}
 	
-	public void removeCustomer(AdministratorController admin, int customerIndex) {
+	public void removeCustomer(SessionController session, AdministratorController admin, int customerIndex) {
 		System.out.println("remove Customer");
 		CustomerController customerObj = customerList.get(customerIndex);
 		admin.removeCustomer(customerObj);
 		this.customerList.remove(customerIndex);
 	}
 
-	public void removeAdministrator(AdministratorController admin, int adminIndex) {
+	public void removeAdministrator(SessionController session, AdministratorController admin, int adminIndex) {
 		System.out.println("remove Admin user");
 		AdministratorController adminObj = adminList.get(adminIndex);
 		admin.removeAdmin(adminObj);
@@ -82,50 +107,18 @@ public class ServerController {
 	/*
 	 * User functions
 	 */
-	public String loginAdmin(String username, String password) { 
-		System.out.println("Admin Login");
-		
-		factory = new AdministratorFactory(username, password);				
-		app = new Application(factory); 
-		
-		LoginUser loginUserOrder = new LoginUser(app);
-		//SellStock sellStockOrder = new SellStock(abcStock);
-
-		Invoker invoker = new Invoker();
-		invoker.takeOrder(loginUserOrder);
-		//broker.takeOrder(sellStockOrder);
-
-		invoker.placeOrders(); 
-					
-		return "logged in";
-	}
-	public String loginCustomer(String username, String password) {
-		System.out.println("Customer Login");
-		factory = new CustomerFactory(username, password);				
-		app = new Application(factory); 
-		
-		LoginUser loginUserOrder = new LoginUser(app);
-		//SellStock sellStockOrder = new SellStock(abcStock);
-
-		Invoker invoker = new Invoker();
-		invoker.takeOrder(loginUserOrder);
-		//broker.takeOrder(sellStockOrder);
-
-		invoker.placeOrders(); 
-		return "logged in";
-	}
 	
-	public void logoutAdmin(/*AdministratorController admin*/) {
+	public void logoutAdmin(SessionController session/*AdministratorController admin*/) {
 		System.out.println("Admin logout");
 		
 		//admin.logout();
 	}
-	public void logoutCustomer(/*CustomerController customer*/) {
+	public void logoutCustomer(SessionController session/*CustomerController customer*/) {
 		System.out.println("Customer logout");
 		//customer.logout();
 	}
 	
-	public void updateCustomer(int customerIndex, String newPassword) {
+	public void updateCustomer(SessionController session, int customerIndex, String newPassword) {
 		System.out.println("update Customer");
 		CustomerController selectedCustomer = this.customerList.get(customerIndex);
 		
@@ -133,7 +126,7 @@ public class ServerController {
 		this.customerList.set(customerIndex, selectedCustomer);
 	}
 	
-	public void updateAdmin(int adminIndex, String newPassword) {
+	public void updateAdmin(SessionController session, int adminIndex, String newPassword) {
 		System.out.println("update Customer");
 		AdministratorController selectedAdmin = this.adminList.get(adminIndex);
 		
@@ -144,21 +137,27 @@ public class ServerController {
 	/*
 	 * Client specific functionalities with products
 	 */
-	public void showProductList() {
-		System.out.println("Here is all our products");
+	public String showProductList(SessionController session) {
+		StringBuilder str = new StringBuilder();
+		str.append("");
+	
 		for (int i = 0; i < this.productList.size(); i++) {
-			System.out.printf("%d\t%s\n", i + 1, this.productList.get(i).getName());
-
+			str.append(i+1);
+			str.append(" ");
+			str.append(this.productList.get(i).getName());
+			str.append("\n");
 		}
+		
+		return str.toString();
 	}
 
-	public String selectProduct(int productIndex) {
+	public String selectProduct(SessionController session, int productIndex) {
 		System.out.println("Select Product");
 		ProductController selectedProduct = this.productList.get(productIndex);
 		return selectedProduct.getName();
 	}
 
-	public String showProductDetails(int productIndex) {
+	public String showProductDetails(SessionController session, int productIndex) {
 		System.out.println("Show Product Details");
 
 		ProductController selectedProduct;
@@ -169,7 +168,7 @@ public class ServerController {
 	/*
 	 * Admin specific functionalities with products
 	 */
-	public ProductController addProduct(String name, double price, String description, int quantity)
+	public ProductController addProduct(SessionController session, String name, double price, String description, int quantity)
 			throws RemoteException {
 		System.out.println("Add Product");
 
@@ -179,14 +178,14 @@ public class ServerController {
 		return productObject;
 	}
 
-	public void removeProduct(int productIndex) {
+	public void removeProduct(SessionController session, int productIndex) {
 		System.out.println("remove Product");
 		ProductController productObj = productList.get(productIndex);
 		productObj.deactivate();
 		this.productList.remove(productIndex);
 	}
 
-	public  void updateProduct(int productIndex, String newName, double newPrice, String newDescription,
+	public  void updateProduct(SessionController session, int productIndex, String newName, double newPrice, String newDescription,
 			int newQuantity) {
 		System.out.println("update Product");
 		ProductController selectedProduct = this.productList.get(productIndex);
@@ -197,16 +196,16 @@ public class ServerController {
 	 * Cart functions
 	 */
 
-	public void addToCart(String username, int productIndex, int quantity) {
+	public void addToCart(SessionController session, String username, int productIndex, int quantity) {
 		
 		System.out.println("Add to Cart");
 	}
 
-	public void showCartDetails(int cartIndex) { 
+	public void showCartDetails(SessionController session, int cartIndex) { 
 		System.out.println("Show Cart Details");
 	}
 	
-	public void checkoutCart(CartController cart) {
+	public void checkoutCart(SessionController session, CartController cart) {
 		System.out.println("Checkout Cart");
 		cart.checkoutCart();
 	}

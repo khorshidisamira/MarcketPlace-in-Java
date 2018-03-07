@@ -7,61 +7,86 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface ServerInterface extends Remote {
+public interface ServerInterface extends Remote { 
+
+	 @RequiresRole("administrator")
+	 public String showAdminIsAuthenticated(SessionController session) throws RemoteException;
+
+	 @RequiresRole("customer")
+	 public String showCustomerIsAuthenticated(SessionController session) throws RemoteException;
+
+	 public SessionController processLogin(String username, String password, String userType) throws RemoteException;
+
+	
+	
 	/*
 	 * Administrator functions with User starts
 	 */
 
-	public CustomerController createCustomer(String username, String password) throws RemoteException;
+	@RequiresRole("administrator")
+	public CustomerController createCustomer(SessionController session, String username, String password) throws RemoteException;
 
-	public AdministratorController createAdministrator(String username, String password) throws RemoteException;
+	@RequiresRole("administrator")
+	public AdministratorController createAdministrator(SessionController session, String username, String password) throws RemoteException;
 
-	public void removeCustomer(AdministratorController admin, int customerIndex) throws RemoteException;
+	@RequiresRole("administrator")
+	public void removeCustomer(SessionController session, AdministratorController admin, int customerIndex) throws RemoteException;
 
-	public void removeAdministrator(AdministratorController admin, int adminIndex) throws RemoteException;
+	@RequiresRole("administrator")
+	public void removeAdministrator(SessionController session, AdministratorController admin, int adminIndex) throws RemoteException;
 
 	/*
 	 * User functions
 	 */
-	public String loginAdmin(String username, String password) throws RemoteException;
+	@RequiresRole("administrator")
+	public void logoutAdmin(SessionController session) throws RemoteException;
 
-	public String loginCustomer(String username, String password) throws RemoteException;
+	@RequiresRole("customer")
+	public void logoutCustomer(SessionController session) throws RemoteException;
 
-	public void logoutAdmin() throws RemoteException;
+	@RequiresRole("customer")
+	public void updateCustomer(SessionController session, int customerIndex, String newPassword) throws RemoteException;
 
-	public void logoutCustomer() throws RemoteException;
-
-	public void updateCustomer(int customerIndex, String newPassword) throws RemoteException;
-
-	public void updateAdmin(int adminIndex, String newPassword) throws RemoteException;
+	@RequiresRole("administrator")
+	public void updateAdmin(SessionController session, int adminIndex, String newPassword) throws RemoteException;
 
 	/*
 	 * Client specific functionalities with products
 	 */
-	public void showProductList() throws RemoteException;
+	 
+	@RequiresRole("customer")
+	public String showProductList(SessionController session) throws RemoteException;
 
-	public String selectProduct(int productIndex) throws RemoteException;
+	@RequiresRole("customer")
+	public String selectProduct(SessionController session, int productIndex) throws RemoteException;
 
-	public String showProductDetails(int productIndex) throws RemoteException;
+	@RequiresRole("customer")
+	public String showProductDetails(SessionController session, int productIndex) throws RemoteException;
 
 	/*
 	 * Admin specific functionalities with products
 	 */
-	public ProductController addProduct(String name, double price, String description, int quantity)
+	@RequiresRole("administrator")
+	public ProductController addProduct(SessionController session, String name, double price, String description, int quantity)
 			throws RemoteException;
 
-	public void removeProduct(int productIndex) throws RemoteException;
+	@RequiresRole("administrator")
+	public void removeProduct(SessionController session, int productIndex) throws RemoteException;
 
-	public void updateProduct(int productIndex, String newName, double newPrice, String newDescription, int newQuantity)
+	@RequiresRole("administrator")
+	public void updateProduct(SessionController session, int productIndex, String newName, double newPrice, String newDescription, int newQuantity)
 			throws RemoteException;
 	/*
 	 * Cart functions
 	 */
 
-	public void addToCart(String username, int productIndex, int quantity) throws RemoteException;
+	@RequiresRole("customer")
+	public void addToCart(SessionController session, String username, int productIndex, int quantity) throws RemoteException;
 
-	public void showCartDetails(int cartIndex) throws RemoteException;
+	@RequiresRole("customer")
+	public void showCartDetails(SessionController session, int cartIndex) throws RemoteException;
 
-	public void checkoutCart(CartController cart) throws RemoteException;
+	@RequiresRole("customer")
+	public void checkoutCart(SessionController session, CartController cart) throws RemoteException;
 
 }

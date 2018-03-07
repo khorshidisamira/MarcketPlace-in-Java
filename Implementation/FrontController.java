@@ -11,6 +11,7 @@ public class FrontController {
 	private ServerInterface server;
 	private Application app; 
 	private String loginStatus;
+	private SessionController session = null;
 	
 
 	/**
@@ -69,13 +70,24 @@ public class FrontController {
 	 */
 	private boolean isAuthenticUser(String username, String password, String userRole) {
 		try{
-		if(userRole.equalsIgnoreCase("administrator"))
-			loginStatus = server.loginAdmin(username, password);
-		else
-			loginStatus = server.loginCustomer(username, password); 
-		
-		System.out.println("User is authenticated successfully.");	 
-		return true;
+			if(userRole.equalsIgnoreCase("administrator")){
+				try{
+				  session = server.processLogin(username, password, "administrator");
+				} catch(Exception e){
+					System.out.println("Client Exception: " + e.getMessage());
+				}
+				
+				//loginStatus = server.loginAdmin(username, password);
+			}else{
+				try{
+				  session = server.processLogin(username, password, "customer");
+				} catch(Exception e){
+					System.out.println("Client Exception: " + e.getMessage());
+				}
+				//loginStatus = server.loginCustomer(username, password); 
+			}
+			System.out.println("User is authenticated successfully.");	 
+			return true;
 		 } catch (Exception e) {
             System.out.println("MarketPlaceClient Exception: "
                     + e.getMessage());
@@ -91,6 +103,6 @@ public class FrontController {
 	 */
 	public void dispatchRequest(String request) {
 		System.out.println("Page Requested: " + request);    
-		dispatcher.dispatch(server, request); 
+		dispatcher.dispatch(server, session, request); 
 	}
 }

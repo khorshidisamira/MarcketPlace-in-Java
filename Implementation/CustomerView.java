@@ -7,11 +7,15 @@ import java.util.Scanner;
 
 public class CustomerView {
 	// Generic method for displaying the Customer View
-	public void showView(ServerInterface myMarketPlace) {
+	public void showView(ServerInterface myMarketPlace, SessionController session) {
 		System.out.println("Welcome to the Customer Page!");
 
 		Scanner input = new Scanner(System.in);
-		// myMarketPlace.loginCustomer(myUser); //myUser.login();
+		try{
+			System.out.println(myMarketPlace.showCustomerIsAuthenticated(session));
+		} catch(Exception e){
+			System.out.println("Client Exception: " + e.getMessage());
+		}
 		// Main menu
 		int option;
 		int productIndex;
@@ -34,16 +38,27 @@ public class CustomerView {
 			 * RemoteException {
 			 * 
 			 */
+			
 			switch (option) {
 			case 1:
 				System.out.println("Showing product list...");
-				// myMarketPlace.showProductList();
+				try{
+					System.out.println(myMarketPlace.showProductList(session));
+				} catch(Exception e){
+					System.out.println("Client Exception: " + e.getMessage());
+				}
+				
 				break;
 			case 2:
 				System.out.print("Enter the number regarding to your product:\t");
 				productIndex = input.nextInt() - 1;
-				// String productName = myMarketPlace.selectProduct(productIndex);
-				// System.out.printf("You have selected %s\n", productName);
+				try{
+					String productName = myMarketPlace.selectProduct(session, productIndex);
+				System.out.printf("You have selected %s\n", productName);
+				} catch(Exception e){
+					System.out.println("Client Exception: " + e.getMessage());
+				}
+	
 				break;
 			case 3:
 				do {

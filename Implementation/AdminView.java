@@ -7,9 +7,14 @@ import java.util.Scanner;
 
 public class AdminView {
 	// Generic method for displaying the Admin View
-	public void showView(ServerInterface myMarketPlace) {
+	public void showView(ServerInterface myMarketPlace, SessionController session) {
 		System.out.println("Welcome to the Admin Page!");
 
+		try{
+			System.out.println(myMarketPlace.showAdminIsAuthenticated(session));
+		} catch(Exception e){
+			System.out.println("Client Exception: " + e.getMessage());
+		}
 		Scanner input = new Scanner(System.in);
 		// myMarketPlace.loginAdmin(myUser);
 		// Main menu

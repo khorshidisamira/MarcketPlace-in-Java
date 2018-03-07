@@ -21,12 +21,12 @@ public class Dispatcher {
 	 * 
 	 * @param request
 	 */
-	public void dispatch(ServerInterface serverObject, String request) {
+	public void dispatch(ServerInterface serverObject, SessionController session, String request) {
 		// Admin or Customer Views
 		if(request.equalsIgnoreCase("CUSTOMER")) {
-			customerView.showView(serverObject);
+			customerView.showView(serverObject, session);
 	    } else {
-	    	adminView.showView(serverObject);
+	    	adminView.showView(serverObject, session);
 	    }	
 	}
 }

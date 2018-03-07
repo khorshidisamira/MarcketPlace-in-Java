@@ -21,26 +21,23 @@ public class MarketPlaceClient {
         
         // RMI Security Manager
         System.setSecurityManager(new SecurityManager());
-
-        try {
-            String name = "rmi://localhost:1099/market";
+		String name = "rmi://localhost:1099/market";
+		ServerInterface myMarketPlace = null;
+		
+        try { 
             // Attempt to locate the MarketPlaceServer...
-            ServerInterface myMarketPlace = (ServerInterface) Naming.lookup(name);
-            
-            //myMarketPlace.showProductList();
-            System.out.println("Welcom to marketplace");
-         // Create new instance of a Front Controller...
-    		FrontController frontController = new FrontController(myMarketPlace);
-    		
-    		frontController.homePage();
-      
-
-        } catch (Exception e) {
-            System.out.println("MarketPlaceClient Exception: "
-                    + e.getMessage());
-            e.printStackTrace();
-        }
-
+            myMarketPlace = (ServerInterface) Naming.lookup(name);
+        } catch(Exception e){
+			System.out.println("Client Exception: " + e.getMessage());
+		}
+ 
+		//myMarketPlace.showProductList();
+		System.out.println("Welcom to marketplace");
+	 // Create new instance of a Front Controller...
+		FrontController frontController = new FrontController(myMarketPlace);
+		
+		frontController.homePage();
+		
         System.exit(0);
     }
 }

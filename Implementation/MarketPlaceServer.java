@@ -6,140 +6,166 @@
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
+
+import java.lang.reflect.Proxy;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
-
-@SuppressWarnings("serial")
+ 
 public class MarketPlaceServer extends UnicastRemoteObject implements ServerInterface {
 
 	private ServerController server;
 
 	public MarketPlaceServer() throws RemoteException, MalformedURLException, NotBoundException {
 		super();
+		
 		this.server = new ServerController();
+		
+		/*
 		try {
 			LocateRegistry.getRegistry(1099).list();
 		} catch (RemoteException e) {
 			LocateRegistry.createRegistry(1099);
 		}
 		Naming.rebind("rmi://localhost:1099/market", this);
+		*/
 	}
 
 	/*
 	 * Administrator functions with User starts
 	 */
 
-	public synchronized CustomerController createCustomer(String username, String password) throws RemoteException {
+	public synchronized CustomerController createCustomer(SessionController session, String username, String password) throws RemoteException {
 
-		return server.createCustomer(username, password);
+		return server.createCustomer(session, username, password);
 	}
 
-	public synchronized AdministratorController createAdministrator(String username, String password)
+	public synchronized AdministratorController createAdministrator(SessionController session, String username, String password)
 			throws RemoteException {
 
-		return server.createAdministrator(username, password);
+		return server.createAdministrator(session, username, password);
 	}
 
-	public synchronized void removeCustomer(AdministratorController admin, int customerIndex) throws RemoteException {
-		server.removeCustomer(admin, customerIndex);
+	public synchronized void removeCustomer(SessionController session, AdministratorController admin, int customerIndex) throws RemoteException {
+		server.removeCustomer(session, admin, customerIndex);
 	}
 
-	public synchronized void removeAdministrator(AdministratorController admin, int adminIndex) throws RemoteException {
-		server.removeAdministrator(admin, adminIndex);
+	public synchronized void removeAdministrator(SessionController session, AdministratorController admin, int adminIndex) throws RemoteException {
+		server.removeAdministrator(session, admin, adminIndex);
 	}
 
 	/*
 	 * User functions
 	 */
-	public synchronized String loginAdmin(String username, String password) throws RemoteException {
-		return server.loginAdmin(username, password);
+	public synchronized void logoutAdmin(SessionController session) throws RemoteException {
+		server.logoutAdmin(session);
 	}
 
-	public synchronized String loginCustomer(String username, String password) throws RemoteException {
-		return server.loginCustomer(username, password);
+	public synchronized void logoutCustomer(SessionController session) throws RemoteException {
+		server.logoutCustomer(session);
 	}
 
-	public synchronized void logoutAdmin() throws RemoteException {
-		server.logoutAdmin();
+	public synchronized void updateCustomer(SessionController session, int customerIndex, String newPassword) throws RemoteException {
+		server.updateCustomer(session, customerIndex, newPassword);
 	}
 
-	public synchronized void logoutCustomer() throws RemoteException {
-		server.logoutCustomer();
-	}
-
-	public synchronized void updateCustomer(int customerIndex, String newPassword) throws RemoteException {
-		server.updateCustomer(customerIndex, newPassword);
-	}
-
-	public synchronized void updateAdmin(int adminIndex, String newPassword) throws RemoteException {
-		server.updateAdmin(adminIndex, newPassword);
+	public synchronized void updateAdmin(SessionController session, int adminIndex, String newPassword) throws RemoteException {
+		server.updateAdmin(session, adminIndex, newPassword);
 	}
 
 	/*
 	 * Client specific functionalities with products
 	 */
-	public synchronized void showProductList() throws RemoteException {
-		server.showProductList();
+	public synchronized String showProductList(SessionController session) throws RemoteException {
+		return server.showProductList(session);
 	}
 
-	public synchronized String selectProduct(int productIndex) throws RemoteException {
-		return server.selectProduct(productIndex);
+	public synchronized String selectProduct(SessionController session, int productIndex) throws RemoteException {
+		return server.selectProduct(session, productIndex);
 	}
 
-	public synchronized String showProductDetails(int productIndex) throws RemoteException {
-		return server.showProductDetails(productIndex);
+	public synchronized String showProductDetails(SessionController session, int productIndex) throws RemoteException {
+		return server.showProductDetails(session, productIndex);
 	}
 
 	/*
 	 * Admin specific functionalities with products
 	 */
-	public synchronized ProductController addProduct(String name, double price, String description, int quantity)
+	public synchronized ProductController addProduct(SessionController session, String name, double price, String description, int quantity)
 			throws RemoteException {
 
-		return server.addProduct(name, price, description, quantity);
+		return server.addProduct(session, name, price, description, quantity);
 	}
 
-	public synchronized void removeProduct(int productIndex) throws RemoteException {
+	public synchronized void removeProduct(SessionController session, int productIndex) throws RemoteException {
 
-		server.removeProduct(productIndex);
+		server.removeProduct(session, productIndex);
 	}
 
-	public synchronized void updateProduct(int productIndex, String newName, double newPrice, String newDescription,
+	public synchronized void updateProduct(SessionController session, int productIndex, String newName, double newPrice, String newDescription,
 			int newQuantity) throws RemoteException {
 
-		server.updateProduct(productIndex, newName, newPrice, newDescription, newQuantity);
+		server.updateProduct(session, productIndex, newName, newPrice, newDescription, newQuantity);
 	}
 	/*
 	 * Cart functions
 	 */
 
-	public synchronized void addToCart(String username, int productIndex, int quantity) throws RemoteException {
-		server.addToCart(username, productIndex, quantity);
+	public synchronized void addToCart(SessionController session, String username, int productIndex, int quantity) throws RemoteException {
+		server.addToCart(session, username, productIndex, quantity);
 	}
 
-	public synchronized void showCartDetails(int cartIndex) throws RemoteException {
+	public synchronized void showCartDetails(SessionController session, int cartIndex) throws RemoteException {
 		System.out.println("Show Cart Details");
-		server.showCartDetails(cartIndex);
+		server.showCartDetails(session, cartIndex);
 	}
 
-	public synchronized void checkoutCart(CartController cart) throws RemoteException {
+	public synchronized void checkoutCart(SessionController session, CartController cart) throws RemoteException {
 		System.out.println("Checkout Cart");
-		server.checkoutCart(cart);
+		server.checkoutCart(session, cart);
+	}
+
+	public String showCustomerIsAuthenticated(SessionController session) throws RemoteException {
+		return "Customer is Authenticated!!!";		
+	}
+	
+	public String showAdminIsAuthenticated(SessionController session) throws RemoteException  {
+		return "Administrator is Authenticated!!!";		
+	}
+	
+	public SessionController processLogin(String username, String password, String userType) throws RemoteException {
+		
+		return server.processLogin(username, password, userType);
 	}
 
 	public static void main(String[] args) throws NotBoundException {
+		
+		// Set the RMI Security Manager...
+		System.setSecurityManager(new SecurityManager());
+		
 		try {
-			new MarketPlaceServer();
-			System.out.println("Market is ready!");
-		} catch (RemoteException re) {
-			System.out.println(re);
-			System.exit(1);
-		} catch (MalformedURLException me) {
-			System.out.println(me);
-			System.exit(1);
+			System.out.println("Creating a Server!");
+			
+			// Location of Server
+			String name = "rmi://localhost:1099/market";
+			
+			System.out.println("Server: Binding it to name: " + name);
+			
+			ServerInterface rmiServer = (ServerInterface) Proxy.newProxyInstance(ServerInterface.class.getClassLoader(),
+	                new Class<?>[] {ServerInterface.class},
+	                new AuthorizationInvocationHandler(new MarketPlaceServer()));
+						
+			// Binds the Server to the RMI Service.
+			Naming.rebind(name, rmiServer);
+			
+			System.out.println("Market is Ready!");
+		} catch (Exception e){
+			System.out.println("Server Exception: " + e.getMessage());
+			e.printStackTrace();
 		}
+		
 	}
 
 }

@@ -5,7 +5,7 @@
 // Samira Khorshidi
 
 public class ProductModel {
-
+	// Ryan: Please provide useful comments in each file.
 	private String name;
 	private double price;
 	private String description;

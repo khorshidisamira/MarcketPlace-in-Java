@@ -4,8 +4,11 @@
 //
 // Samira Khorshidi 
 import java.io.Serializable;
-public class SessionController implements Serializable {
 
+// Ryan: Why would a Controller need to be serialized...perhaps this name isn't correct.
+
+public class SessionController implements Serializable {
+	// Ryan: Please provide useful comments in each file.
 	private String username;
 	private String password;
 	private String userType;

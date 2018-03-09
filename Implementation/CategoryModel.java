@@ -5,5 +5,5 @@
 // Samira Khorshidi
 
 public class CategoryModel {
-
+	// Ryan: What is the purpose of this Class?
 }

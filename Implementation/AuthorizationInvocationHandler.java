@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+// Ryan: Why is the handler Serializable?
 public class AuthorizationInvocationHandler implements InvocationHandler, Serializable {
 	private Object objectImpl;
 	 

@@ -4,7 +4,7 @@
 //
 // Samira Khorshidi
 import java.util.Scanner;
-
+// Ryan: Please provide useful comments in each file.
 public class AdminView {
 	// Generic method for displaying the Admin View
 	public void showView(ServerInterface myMarketPlace, SessionController session) {

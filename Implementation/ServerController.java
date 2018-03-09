@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.io.Serializable;
 
+// Ryan: Why would a Controller need to be serialized?
 public class ServerController implements Serializable{
 	private ArrayList<CustomerController> customerList = new ArrayList<>();// Holds all customers 
 	private ArrayList<AdministratorController> adminList = new ArrayList<>();// Holds all Admins 

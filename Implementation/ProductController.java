@@ -8,7 +8,9 @@
  *
  * @author Samira
  */
-public class ProductController {
+ 
+import java.io.Serializable;
+public class ProductController implements Serializable{
 
 	private ProductModel model;
 	// private ArrayList<ProductModel> productList = new ArrayList<>(); //Holds
@@ -17,27 +19,6 @@ public class ProductController {
 	// Model-View Glue
 	public ProductController(ProductModel newModel) {
 		model = newModel;
-
-		// //initialize Products
-		// String[] names = new String[5];
-		// String[] descriptions = new String[5];
-		// names[0] = "Shoe";
-		// names[1] = "TV";
-		// names[2] = "Cellphone";
-		// names[3] = "Shoe 2";
-		// names[4] = "Shoe 3";
-		//
-		// descriptions[0] = "Red Shoe";
-		// descriptions[1] = "Smart TV";
-		// descriptions[2] = "Iphone Cellphone";
-		// descriptions[3] = "Pink Shoe 2";
-		// descriptions[4] = "Blue Shoe 3";
-		//
-		// for(int i=0; i<5; i++) {
-		// ProductModel product = new ProductModel(names[i], 12.99, descriptions[i], 3);
-		// this.productList.add(product);
-		// }
-
 	}
 
 	/**
@@ -47,6 +28,12 @@ public class ProductController {
 		return model.getName();
 	}
 
+	/**
+	 * @return quantity of the product
+	 */
+	public int getQuantity() {
+		return model.getQuantity();
+	}
 	/**
 	 * Responsible for returning details of a product
 	 * 
@@ -74,8 +61,8 @@ public class ProductController {
 	 * @param newModel
 	 * @return product object
 	 */
-	public ProductController addAdmin(ProductModel newModel) {
-		return new ProductController(newModel);
+	public void add() {
+		this.model.add();
 	}
 
 	/**

@@ -4,6 +4,12 @@
 //
 // Samira Khorshidi
 public interface ProductInterface {  
+	
+	/**
+	 * @return name of the product
+	 */
+	public String showProductList();
+	
 	/**
 	 * @return name of the product
 	 */
@@ -30,10 +36,19 @@ public interface ProductInterface {
 	 * Responsible for creating new product
 	 * 
 	 * @param newModel
-	 * @return product object
+	 * @return string
 	 */
-	public String addProduct(ProductModel newModel);
+	public String addProduct(String name, float price, String description, int quantity);
 
+	
+	/**
+	 * Responsible for purchasing a product
+	 * 
+	 * @return a string
+	 */
+	public String addToCart(String user, int productId, int quantity);
+	
+	
 	/**
 	 * Responsible for removing product
 	 * 

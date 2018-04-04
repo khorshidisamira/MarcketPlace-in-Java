@@ -58,7 +58,7 @@ public interface ServerInterface extends Remote {
 	public String showProductList(SessionController session) throws RemoteException;
 
 	@RequiresRole("customer")
-	public String selectProduct(SessionController session, int productIndex) throws RemoteException;
+	public ProductController selectProduct(SessionController session, int productIndex) throws RemoteException;
 
 	@RequiresRole("customer")
 	public String showProductDetails(SessionController session, int productIndex) throws RemoteException;
@@ -67,7 +67,7 @@ public interface ServerInterface extends Remote {
 	 * Admin specific functionalities with products
 	 */
 	@RequiresRole("administrator")
-	public ProductController addProduct(SessionController session, String name, double price, String description, int quantity)
+	public String addProduct(SessionController session, String name, float price, String description, int quantity)
 			throws RemoteException;
 
 	@RequiresRole("administrator")
@@ -81,12 +81,16 @@ public interface ServerInterface extends Remote {
 	 */
 
 	@RequiresRole("customer")
-	public void addToCart(SessionController session, String username, int productIndex, int quantity) throws RemoteException;
+	public String addToCart(SessionController session, int productIndex, int quantity) throws RemoteException;
 
 	@RequiresRole("customer")
 	public void showCartDetails(SessionController session, int cartIndex) throws RemoteException;
 
 	@RequiresRole("customer")
 	public void checkoutCart(SessionController session, CartController cart) throws RemoteException;
+	
+	public void concurrencyTest() throws RemoteException;
+	
+	public void concurrencyTestSync() throws RemoteException ;
 
 }

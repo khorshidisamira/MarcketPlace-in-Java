@@ -1,4 +1,5 @@
 # csci50700_spring2018_marketplace
+In this code we are using database, so before all please edit makefile and change "/home/sakhors/OnlineMarket_2_4/mysql-connector.jar" with the address of your mysql connector, then:
 
 To run the application successfully, follow the following steps:
 
@@ -10,11 +11,13 @@ To run the application successfully, follow the following steps:
 	4. Run the Client in another window: make client 
 	5. In Client there is 2 option for Administrator and Customer  
 
-ps 1: rmiregistry  is using 1099 as its port, if you get error on make registry command, please find the PID of the rmiregistry with this port using "ps -ax|grep rmiregistry" and kill that process  
+ps 1: rmiregistry  is using 60000 as its port, if you get error on make registry command, please find the PID of the rmiregistry with this port using "ps -ax|grep rmiregistry" and kill that process  
 
-ps 2: The only valid functionality is login, other functions in serverController are not valid  
+ps 2: The only valid functionality is login, browse products, add a new product and add a product to shopping cart(purchase) other functions in serverController are not valid  
 
-ps 3: Uou can use any username or password to login  
+ps 3: server.concurrencyTest(); is a function that has delay inside it and it is just a test function of concurrency
+
+ps 4: You can use any username or password to login  
 
 outlines of the files:  
 

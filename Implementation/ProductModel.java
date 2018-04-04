@@ -4,9 +4,13 @@
 //
 // Samira Khorshidi
 
-public class ProductModel {
+import java.io.Serializable;
+import java.sql.ResultSet;
+public class ProductModel  implements Serializable{
 	// Ryan: Please provide useful comments in each file.
 	//fixed: I added new comments
+	
+	private databaseManager dbManager;
 	private String name;
 	private double price;
 	private String description;
@@ -31,6 +35,15 @@ public class ProductModel {
 	}
 
 	/**
+	 * Getter(return the quantity of a product)
+	 * 
+	 * @return the quantity of product
+	 */
+	public int getQuantity() {
+		return quantity;
+	}
+	
+	/**
 	 * getter of a product's price
 	 * 
 	 * @return product's price
@@ -46,15 +59,6 @@ public class ProductModel {
 	 */
 	public String getDescription() {
 		return description;
-	}
-
-	/**
-	 * getter of a product's Quantity
-	 * 
-	 * @return product's Quantity
-	 */
-	public double getQuantity() {
-		return quantity;
 	}
 
 	/**
@@ -83,4 +87,11 @@ public class ProductModel {
 	public void deactivate() {
 		productStatus = "deactive";
 	}
+	
+	public void add(){
+		//	rs = stmt.executeQuery("INSERT INTO `sakhors_db`.`product` (`name`, `description`, `quantity`, `status`) VALUES ( '" + name + "', '" + description + "', " + quantity + ", 'active')" );
+	}
+	
+	
+	
 }

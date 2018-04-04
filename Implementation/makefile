@@ -1,15 +1,15 @@
 default: 
-		javac *.java
+		javac -cp ".:/home/sakhors/OnlineMarket_2_4/mysql-connector.jar" *.java
 	
 registry: 
 	
-	rmiregistry 1099&
+	rmiregistry 60000&
 
 server: 
-	java -Djava.security.manager -Djava.security.policy=policy MarketPlaceServer &
+	java  -cp ".:/home/sakhors/OnlineMarket_2_4/mysql-connector.jar" -Djava.security.manager -Djava.security.policy=policy MarketPlaceServer &
 
 client: 
-	java -Djava.security.manager -Djava.security.policy=policy MarketPlaceClient
+	java  -cp ".:/home/sakhors/OnlineMarket_2_4/mysql-connector.jar" -Djava.security.manager -Djava.security.policy=policy MarketPlaceClient
 clean: 
 	$(RM) *.class
 

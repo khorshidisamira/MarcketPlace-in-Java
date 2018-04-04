@@ -8,6 +8,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.io.Serializable;
 
+import java.sql.ResultSet;
+
 // Ryan: Why would a Controller need to be serialized?
 //Fixed: because this controller has all products and users of the system which I want to make them serialized, when I use database, I will unserialize this controller
 
@@ -18,8 +20,11 @@ public class ServerController implements Serializable{
 	private ArrayList<CartController> cartList = new ArrayList<>(); // Holds system's carts per user
 	private Application app;
     private GUIFactory factory;
+	private databaseManager dbManager;
 		
 	public ServerController() {
+		
+		dbManager = new databaseManager();
 		// initialize Systems's Products
 				String[] names = new String[5];
 				String[] descriptions = new String[5];
@@ -51,7 +56,33 @@ public class ServerController implements Serializable{
 				this.cartList.add(new CartController(customerCart));
 	}
 	
+	/* The following two methods are testing the concurrency and synchronizion*/
 	
+	public void concurrencyTestSync(String host){
+		try{
+		System.out.println(host + "synchronized concurrencyTest call....");
+		
+		  Thread.sleep(6000);
+		System.out.println( host + "synchronized concurrencyTest finish....");	
+		} catch(Exception e){
+		System.out.println("Exception is :" + e.getMessage());
+			
+		}
+	}
+	
+	public void concurrencyTest(String host){
+		try{
+			
+			System.out.println( host + " concurrencyTest call....");
+			
+			  Thread.sleep(6000);
+			
+			System.out.println( host + "concurrencyTest finish....");	
+		} catch(Exception e){
+			System.out.println("Exception is :" + e.getMessage());
+			
+		}
+	}
 	public SessionController processLogin(String username, String password, String userType){
 		if(userType.equalsIgnoreCase("customer")){
 			System.out.println("Customer Login");
@@ -71,7 +102,7 @@ public class ServerController implements Serializable{
 
 		invoker.placeOrders(); 
 		
-		SessionController session = new SessionController(userType);
+		SessionController session = new SessionController(username, userType);
 		return session;
 	} 
 	
@@ -141,23 +172,32 @@ public class ServerController implements Serializable{
 	 * Client specific functionalities with products
 	 */
 	public String showProductList(SessionController session) {
-		StringBuilder str = new StringBuilder();
-		str.append("");
-	
-		for (int i = 0; i < this.productList.size(); i++) {
-			str.append(i+1);
-			str.append(" ");
-			str.append(this.productList.get(i).getName());
-			str.append("\n");
-		}
-		
-		return str.toString();
+		return app.showProductList();
 	}
 
-	public String selectProduct(SessionController session, int productIndex) {
+	public ProductController selectProduct(SessionController session, int productIndex) {
 		System.out.println("Select Product");
-		ProductController selectedProduct = this.productList.get(productIndex);
-		return selectedProduct.getName();
+		ProductController selectedProduct = null;
+		try{
+			ResultSet rs = dbManager.executeMyQuery("SELECT * FROM `product` WHERE `status` = 'active' AND productId = " + productIndex);
+			System.out.println("SELECT * FROM `product` WHERE `status` = 'active' AND productId = " + productIndex);
+			while (rs.next())  {
+				int id = rs.getInt("productId");
+				String productName = rs.getString("name");
+				int productQuantity = rs.getInt("quantity");
+				float productPrice = rs.getInt("price");
+				String productDescription = rs.getString("description");
+				
+				ProductModel pModel = new ProductModel(productName, productPrice, productDescription, productQuantity);
+				selectedProduct = new ProductController(pModel);
+				break;
+			}
+			
+		}catch(Exception e){
+			System.out.println("Database Exception" + e.getMessage());
+		}
+		System.out.println("Name: " + selectedProduct.getName());
+		return selectedProduct;
 	}
 
 	public String showProductDetails(SessionController session, int productIndex) {
@@ -171,14 +211,10 @@ public class ServerController implements Serializable{
 	/*
 	 * Admin specific functionalities with products
 	 */
-	public ProductController addProduct(SessionController session, String name, double price, String description, int quantity)
+	public String addProduct(SessionController session, String name, float price, String description, int quantity)
 			throws RemoteException {
 		System.out.println("Add Product");
-
-		ProductModel productModel = new ProductModel(name, price, description, quantity);
-		ProductController productObject = new ProductController(productModel);
-		this.productList.add(productObject);
-		return productObject;
+		return app.addProduct(name, price, description, quantity);
 	}
 
 	public void removeProduct(SessionController session, int productIndex) {
@@ -199,9 +235,11 @@ public class ServerController implements Serializable{
 	 * Cart functions
 	 */
 
-	public void addToCart(SessionController session, String username, int productIndex, int quantity) {
+	public String addToCart(SessionController session, int productIndex, int quantity) {
 		
-		System.out.println("Add to Cart");
+			System.out.println("Add Product to cart");
+			String user = session.getUsername();
+		return app.addToCart(user, productIndex, quantity);
 	}
 
 	public void showCartDetails(SessionController session, int cartIndex) { 

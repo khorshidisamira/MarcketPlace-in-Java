@@ -5,17 +5,21 @@
 // Samira Khorshidi 
 // Ryan: Why would a Controller need to be serialized...perhaps this name isn't correct.
 //Fixed: I create a SessionModel and that one is serialized because we want to serialize session object
-
-public class SessionController {
+import java.io.Serializable;
+public class SessionController implements Serializable{
 	// Ryan: Please provide useful comments in each file.
 	//Fixed: I added comments
 	private SessionModel model;
 	
-	public SessionController(String type) {
-		this.model = new SessionModel(type);
+	public SessionController(String username, String type) {
+		this.model = new SessionModel(username, type);
 	}
 	
 	public String getRoleType(){
 		return model.getRoleType();
+	}
+	
+	public String getUsername(){
+		return model.getUsername();
 	}
 }

@@ -27,7 +27,7 @@ public class AdminView {
 		int userId;
 		int productId;
 		String name;
-		double price;
+		float price;
 		String description;
 		int quantity;
 
@@ -95,18 +95,23 @@ public class AdminView {
 				// myMarketPlace.removeAdministrator( myuUser, userId);
 				break;
 			case 7:
-				System.out.println("Adding new product...");
-				System.out.print("Please enter product name:\t");
-				name = input.nextLine();
-				input.nextLine();
-				System.out.print("Please enter product price:\t");
-				price = input.nextDouble();
-				System.out.print("Please enter product decription:\t");
-				description = input.nextLine();
-				input.nextLine();
-				System.out.print("Please enter product quantity:\t");
-				quantity = input.nextInt();
-				// myMarketPlace.addProduct( name, price, description, quantity);
+				try{
+					System.out.println("Adding new product...");
+					System.out.print("Please enter product name:\t");
+					 input.nextLine(); 
+					name = input.nextLine();
+					System.out.print("Please enter product price:\t");
+					price = input.nextFloat();
+					System.out.print("Please enter product decription:\t");
+					 input.nextLine();
+					description = input.nextLine();
+					System.out.print("Please enter product quantity:\t");
+					quantity = input.nextInt();
+					String addStatus = myMarketPlace.addProduct( session, name, price, description, quantity);
+					System.out.print("NAME::::" + name);
+				}catch(Exception e){
+					System.out.print(e.getMessage());
+				}
 				break;
 			case 8:
 				System.out.println("Updating a product...");
@@ -116,7 +121,7 @@ public class AdminView {
 				name = input.nextLine();
 				input.nextLine();
 				System.out.print("Please enter new product price:\t");
-				price = input.nextDouble();
+				price = input.nextFloat();
 				System.out.print("Please enter new product decription:\t");
 				description = input.nextLine();
 				input.nextLine();

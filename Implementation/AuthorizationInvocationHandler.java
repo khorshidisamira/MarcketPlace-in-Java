@@ -22,7 +22,9 @@ public class AuthorizationInvocationHandler implements InvocationHandler, Serial
 			SessionController session = (SessionController) args[0];
 			//String session = (String) args[0];
 			
+			
 			if (session.getRoleType().equals(test.value())) {//if (session.equals(test.value())) {//
+			
 				return method.invoke(objectImpl, args);
 			} else {
 				

@@ -21,7 +21,7 @@ public class MarketPlaceClient {
         
         // RMI Security Manager
         System.setSecurityManager(new SecurityManager());
-		String name = "rmi://localhost:1099/market";
+		String name = "rmi://in-csci-rrpc01.cs.iupui.edu:60000/market";
 		ServerInterface myMarketPlace = null;
 		
         try { 

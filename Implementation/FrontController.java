@@ -28,6 +28,12 @@ public class FrontController {
 		String password;
 		
 		Scanner input = new Scanner(System.in);
+		try{
+		//server.concurrencyTest();
+		//server.concurrencyTestSync();
+		}catch(Exception e){
+			System.out.println("Exception: " + e.getMessage());
+		}
 	      do {
           	
               System.out.println("**********************");
@@ -73,6 +79,7 @@ public class FrontController {
 			if(userRole.equalsIgnoreCase("administrator")){
 				try{
 				  session = server.processLogin(username, password, "administrator");
+				  System.out.println("Session is " + session.getRoleType());
 				} catch(Exception e){
 					System.out.println("Client Exception: " + e.getMessage());
 				}

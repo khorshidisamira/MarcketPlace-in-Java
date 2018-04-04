@@ -11,6 +11,7 @@ import java.lang.reflect.Proxy;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.server.RemoteServer;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
  
@@ -82,7 +83,7 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 		return server.showProductList(session);
 	}
 
-	public synchronized String selectProduct(SessionController session, int productIndex) throws RemoteException {
+	public synchronized ProductController selectProduct(SessionController session, int productIndex) throws RemoteException {
 		return server.selectProduct(session, productIndex);
 	}
 
@@ -93,7 +94,7 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 	/*
 	 * Admin specific functionalities with products
 	 */
-	public synchronized ProductController addProduct(SessionController session, String name, double price, String description, int quantity)
+	public String addProduct(SessionController session, String name, float price, String description, int quantity) 
 			throws RemoteException {
 
 		return server.addProduct(session, name, price, description, quantity);
@@ -113,8 +114,8 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 	 * Cart functions
 	 */
 
-	public synchronized void addToCart(SessionController session, String username, int productIndex, int quantity) throws RemoteException {
-		server.addToCart(session, username, productIndex, quantity);
+	public synchronized String addToCart(SessionController session, int productIndex, int quantity) throws RemoteException {
+		return server.addToCart(session, productIndex, quantity);
 	}
 
 	public synchronized void showCartDetails(SessionController session, int cartIndex) throws RemoteException {
@@ -139,6 +140,24 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 		
 		return server.processLogin(username, password, userType);
 	}
+	
+	public void concurrencyTest() throws RemoteException {
+		try{
+			server.concurrencyTest(RemoteServer.getClientHost());
+		
+		} catch(Exception e){
+		System.out.println("Exception is :" + e.getMessage());
+			
+		}
+	}
+	public synchronized void concurrencyTestSync() throws RemoteException {
+		try{
+		server.concurrencyTestSync(RemoteServer.getClientHost());
+		} catch(Exception e){
+		System.out.println("Exception is :" + e.getMessage());
+			
+		}
+	}
 
 	public static void main(String[] args) throws NotBoundException {
 		
@@ -149,7 +168,7 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 			System.out.println("Creating a Server!");
 			
 			// Location of Server
-			String name = "rmi://localhost:1099/market";
+			String name = "rmi://in-csci-rrpc01.cs.iupui.edu:60000/market";
 			
 			System.out.println("Server: Binding it to name: " + name);
 			

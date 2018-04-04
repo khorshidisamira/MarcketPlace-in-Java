@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 // Ryan: Why would a Controller need to be serialized?
+//Fixed: because this controller has all products and users of the system which I want to make them serialized, when I use database, I will unserialize this controller
+
 public class ServerController implements Serializable{
 	private ArrayList<CustomerController> customerList = new ArrayList<>();// Holds all customers 
 	private ArrayList<AdministratorController> adminList = new ArrayList<>();// Holds all Admins 

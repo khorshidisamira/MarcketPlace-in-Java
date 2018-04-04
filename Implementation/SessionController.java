@@ -3,23 +3,19 @@
 // I pledge that I have neither given nor received any help on this assignment.
 //
 // Samira Khorshidi 
-import java.io.Serializable;
-
 // Ryan: Why would a Controller need to be serialized...perhaps this name isn't correct.
+//Fixed: I create a SessionModel and that one is serialized because we want to serialize session object
 
-public class SessionController implements Serializable {
+public class SessionController {
 	// Ryan: Please provide useful comments in each file.
-	private String username;
-	private String password;
-	private String userType;
-	private String role; 
+	//Fixed: I added comments
+	private SessionModel model;
 	
 	public SessionController(String type) {
-		this.userType = type;
-		this.role = type;
+		this.model = new SessionModel(type);
 	}
 	
 	public String getRoleType(){
-		return this.role;
+		return model.getRoleType();
 	}
 }

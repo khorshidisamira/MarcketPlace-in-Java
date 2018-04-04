@@ -5,8 +5,10 @@
 // Samira Khorshidi
 import java.util.Scanner;
 // Ryan: Please provide useful comments in each file.
+//Fixed: I added some new comments
 public class AdminView {
 	// Generic method for displaying the Admin View
+	//This method is simulating the view that an Admin user see after login
 	public void showView(ServerInterface myMarketPlace, SessionController session) {
 		System.out.println("Welcome to the Admin Page!");
 

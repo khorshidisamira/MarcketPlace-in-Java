@@ -15,9 +15,13 @@ ps 1: rmiregistry  is using 60000 as its port, if you get error on make registry
 
 ps 2: The only valid functionality is login, browse products, add a new product and add a product to shopping cart(purchase) other functions in serverController are not valid  
 
-ps 3: server.concurrencyTest(); is a function that has delay inside it and it is just a test function of concurrency
+ps 3: server.concurrencyTest(); is a function that is responsible for simulating cuncurrency, at the begining of creating each client, this method will be called and you can see the ip addres and the status of the client in server, it has delay inside it and it is just a test function of concurrency
 
 ps 4: You can use any username or password to login  
+
+ps 5: Please run the server on in-csci-rrpc01.cs.iupui.edu machine  
+
+ps 6: Please before purchase, select a product
 
 outlines of the files:  
 

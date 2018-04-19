@@ -86,6 +86,7 @@ public class CustomerView {
 						quantity = quant.nextInt();
 						
 						String cartStatus = myMarketPlace.addToCart(session, productIndex, quantity);
+						System.out.println(cartStatus);
 					} while (productIndex < 1 && (quantity > productQuantity || quantity < 1));
 				} catch(Exception e){
 					System.out.println("Client Exception: " + e.getMessage());

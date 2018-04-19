@@ -55,7 +55,7 @@ public class databaseManager{
 	}
 	
 
-	public void updateMyRecord(String query){
+	public int updateMyRecord(String query){
 		ResultSet rs = null;
 		try {
 			conn = (Connection) 
@@ -68,7 +68,7 @@ public class databaseManager{
 					stmt = (Statement) 
 					conn.createStatement();
 					try {
-						stmt.executeUpdate( query );
+						return stmt.executeUpdate( query );
 					} catch (SQLException e) {
 						System.err.println("Unable execute query!");
 						e.printStackTrace();
@@ -76,12 +76,15 @@ public class databaseManager{
 					stmt.close();
 				} catch (SQLException e1) {
 					System.err.println("Unable to create SQL statement!");
+					
 					e1.printStackTrace();
 				}
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException("Cannot connect the database!", e);
+		
 		} 
+		return 1;
 	}
 	
 }

@@ -30,7 +30,7 @@ public class FrontController {
 		Scanner input = new Scanner(System.in);
 		try{
 		//server.concurrencyTest();
-		//server.concurrencyTestSync();
+		server.concurrencyTestSync();
 		}catch(Exception e){
 			System.out.println("Exception: " + e.getMessage());
 		}

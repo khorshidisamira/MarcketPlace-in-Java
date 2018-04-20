@@ -25,9 +25,11 @@ ps 3: You can use the following are valid username/password for users:
 	Admin: username: admin, password: admin
 	Customer: username: customer, password:customer
 
-ps 5: Please run the server on in-csci-rrpc01.cs.iupui.edu machine  
+ps 4: Please run the server on in-csci-rrpc01.cs.iupui.edu machine  
 
-ps 6: Please before purchase, select a product
+ps 5: Please before purchase, select a product
+
+ps 6: As a test of synchronization, we put a function call in line 33 of FrontController which call server.concurrencyTestSync(); in a synchronized fashion, you can see server command line to see what happen, a sample run has been added to documentation folder.
 
 outlines of the files:  
 

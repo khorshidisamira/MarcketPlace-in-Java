@@ -29,10 +29,29 @@ public class CustomerUser implements UserInterface {
 	 * @return user's type: admin or customer
 	 */
 	@Override 
-	public String login() {
-		model.setLoginStatus(true);
-		return model.getType();
+	public String login() { 
+		String loginStatus = null;
+		try{
+			if(model.setLoginStatus(true))
+				loginStatus = "successfull";
+			
+		}catch(Exception e){
+			System.out.println("Database Exception:" + e.getMessage());
+		}
+		
+		return loginStatus;
 	}
+	
+	/**
+	 * Responsible for checking login status
+	 * 
+	 * @return user's status
+	 */
+	@Override 
+	public boolean getLoginStatus() { 
+		return model.getLoginStatus();
+	}
+
 
 	/**
 	 * Responsible for logout the User
@@ -79,28 +98,22 @@ public class CustomerUser implements UserInterface {
 	public void addAdmin(UserModel newModel){}
 
 	/**
-	 * Responsible for removing Administrator account
-	 * 
-	 * @param administrator
-	 */
-	public void removeAdmin(AdministratorController administrator){}
-
-	/**
 	 * Responsible for creating new Customer account
 	 * 
-	 * @param newModel
+	 * @param username, password
 	 * @return Customer' User
 	 */
-	public void addCustomer(UserModel newModel){
-		
+	public String addCustomer(String username, String password){
+		return null;
 	}
-
+	
 	/**
-	 * Deactivate customer account
+	 * Responsible for creating new admin account
 	 * 
-	 * @param customer
+	 * @param username, password
+	 * @return Customer' User
 	 */
-	public void removeCustomer(CustomerController customer){
-		
+	public String addAdmin(String username, String password){
+		return null;
 	}
 }

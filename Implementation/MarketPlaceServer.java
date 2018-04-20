@@ -38,23 +38,17 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 	 * Administrator functions with User starts
 	 */
 
-	public synchronized CustomerController createCustomer(SessionController session, String username, String password) throws RemoteException {
+	public synchronized String createCustomer(SessionController session, String username, String password) throws RemoteException {
 
-		return server.createCustomer(session, username, password);
+	System.out.println("Creating new customer..." + username + password);
+					
+		return server.createCustomer(username, password);
 	}
 
-	public synchronized AdministratorController createAdministrator(SessionController session, String username, String password)
+	public synchronized String createAdministrator(SessionController session, String username, String password)
 			throws RemoteException {
 
-		return server.createAdministrator(session, username, password);
-	}
-
-	public synchronized void removeCustomer(SessionController session, AdministratorController admin, int customerIndex) throws RemoteException {
-		server.removeCustomer(session, admin, customerIndex);
-	}
-
-	public synchronized void removeAdministrator(SessionController session, AdministratorController admin, int adminIndex) throws RemoteException {
-		server.removeAdministrator(session, admin, adminIndex);
+		return server.createAdministrator(username, password);
 	}
 
 	/*
@@ -83,7 +77,7 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 		return server.showProductList(session);
 	}
 
-	public synchronized ProductController selectProduct(SessionController session, int productIndex) throws RemoteException {
+	public synchronized String selectProduct(SessionController session, int productIndex) throws RemoteException {
 		return server.selectProduct(session, productIndex);
 	}
 
@@ -100,15 +94,14 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 		return server.addProduct(session, name, price, description, quantity);
 	}
 
-	public synchronized void removeProduct(SessionController session, int productIndex) throws RemoteException {
+	public synchronized String removeProduct(SessionController session, int productIndex) throws RemoteException {
 
-		server.removeProduct(session, productIndex);
+		return server.removeProduct(session, productIndex);
 	}
 
-	public synchronized void updateProduct(SessionController session, int productIndex, String newName, double newPrice, String newDescription,
+	public synchronized String updateProduct(SessionController session, int productIndex, String newName, float newPrice, String newDescription,
 			int newQuantity) throws RemoteException {
-
-		server.updateProduct(session, productIndex, newName, newPrice, newDescription, newQuantity);
+		return server.updateProduct(session, productIndex, newName, newPrice, newDescription, newQuantity);
 	}
 	/*
 	 * Cart functions
@@ -121,11 +114,6 @@ public class MarketPlaceServer extends UnicastRemoteObject implements ServerInte
 	public synchronized void showCartDetails(SessionController session, int cartIndex) throws RemoteException {
 		System.out.println("Show Cart Details");
 		server.showCartDetails(session, cartIndex);
-	}
-
-	public synchronized void checkoutCart(SessionController session, CartController cart) throws RemoteException {
-		System.out.println("Checkout Cart");
-		server.checkoutCart(session, cart);
 	}
 
 	public String showCustomerIsAuthenticated(SessionController session) throws RemoteException {

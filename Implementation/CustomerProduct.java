@@ -8,12 +8,12 @@
  * All products families have the same varieties (Administrator/Customer).
  */
  
-import java.io.Serializable;
+//import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class CustomerProduct  implements ProductInterface, Serializable { 
+public class CustomerProduct  implements ProductInterface { 
 
-	private ProductModel model;
+	private ProductModel model = new ProductModel();
 	private databaseManager dbManager = new databaseManager();
 	// private ArrayList<ProductModel> productList = new ArrayList<>(); //Holds
 	// system's products
@@ -24,34 +24,9 @@ public class CustomerProduct  implements ProductInterface, Serializable {
 	*/
 	@Override
 	public String showProductList(){
-		StringBuilder str = new StringBuilder();
-		str.append("");
-		try{
-			
-			ResultSet rs = dbManager.executeMyQuery("SELECT * FROM `product` WHERE `status` = 'active'");
-			while (rs.next())  {
-				int id = rs.getInt("productId");
-				String productName = rs.getString("name"); 
-				float productPrice = rs.getFloat("price");
-				int productQuantity = rs.getInt("quantity");
-				String productDescription = rs.getString("description");
-				str.append(id);
-				str.append(" Name: ");
-				str.append(productName);
-				str.append(" Price: ");
-				str.append(productPrice);
-				str.append(" Quantity: ");
-				str.append(productQuantity);
-				str.append(" Description: ");
-				str.append(productDescription);
-				str.append("\n");
-				System.out.println("ID: " + id + "\t" + "Name: " + productName + "\t" + "Price: " + productPrice + "\t" + "Quantity: " + productQuantity + "\t" + "Description: " + productDescription);				
-			}
-			
-		}catch(Exception e){
-			System.out.println("Database Exception:" + e.getMessage());
-		}
-		return str.toString();		
+		System.out.println("customeeeers");
+		String products = model.showProductList();
+		return products;
 	}
 	
 	/**
@@ -60,6 +35,17 @@ public class CustomerProduct  implements ProductInterface, Serializable {
 	@Override 
 	public String getName() {
 		return model.getName();
+	}
+	
+	/**
+	 * Responsible for selecting a product
+	 * 
+	 * @param product productId
+	 * @return a string
+	 */
+	@Override
+	public String selectProduct(int productId){
+		return model.selectProduct(productId);
 	}
 
 	/**
@@ -81,7 +67,7 @@ public class CustomerProduct  implements ProductInterface, Serializable {
 	 * @param newQuantity
 	 */
 	@Override 
-	public String updateDetails(String newName, double newPrice, String newDescription, int newQuantity) {
+	public String updateProduct(int productIndex, String newName, float newPrice, String newDescription, int newQuantity){
 		return null;
 	}
 
@@ -105,28 +91,7 @@ public class CustomerProduct  implements ProductInterface, Serializable {
 	 */
 	@Override
 	public String addToCart(String user, int productId, int quantity) {
-		String commandStatus = null;
-		try{
-			String product_stm = String.format("UPDATE product SET quantity = GREATEST(0,(quantity - %s)) WHERE productId = %s AND ((quantity - %s) >0 OR (quantity - %s) = 0)",quantity,productId,quantity,quantity);
-			int result = dbManager.updateMyRecord(product_stm);
-			System.out.println(result);
-			if(result>0){ 
-				String cart_stm = String.format("INSERT INTO cart(username, productId, quantity) VALUES ('%s',%s,%s)", user, quantity,productId);
-				int res = dbManager.updateMyRecord(cart_stm);
-				if(res>0)
-					commandStatus = "Product has been added to your cart successfully!";
-				else 
-					commandStatus = "Please try again later!";
-			} else{
-				commandStatus = "Please try again later!";
-			}
-			return commandStatus;
-		}catch(Exception e){
-			commandStatus = "Please try again later!";
-			System.out.println("Database Exception" + e.getMessage());
-		}
-		
-		return commandStatus;
+		return model.addToCart(user, productId, quantity);
 	}
 	
 	
@@ -137,7 +102,7 @@ public class CustomerProduct  implements ProductInterface, Serializable {
 	 * @param
 	 */
 	@Override
-	public String deactivate() {
+	public String deactivate(int productId) {
 		return null;
 	}
 }

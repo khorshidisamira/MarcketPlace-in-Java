@@ -29,7 +29,7 @@ public class FrontController {
 		
 		Scanner input = new Scanner(System.in);
 		try{
-		server.concurrencyTest();// test concurrency
+		//server.concurrencyTest();
 		//server.concurrencyTestSync();
 		}catch(Exception e){
 			System.out.println("Exception: " + e.getMessage());
@@ -53,6 +53,15 @@ public class FrontController {
 				
 				if(isAuthenticUser(username, password, "administrator")) {//Login as admin
 					dispatchRequest("ADMIN");
+				} else {
+					System.out.print("Wrong username or password!!!\n");
+					System.out.println("**********************");
+					System.out.println("1- Login as admin");
+					System.out.println("2- Login as customer");
+					System.out.println("3- Exit Marketplace!");
+					System.out.println("**********************");
+					System.out.print("Please choose an option:\t");
+					option = input.nextInt();
 				}
 				
               } else if (option == 2) {
@@ -63,7 +72,16 @@ public class FrontController {
 				
             	 if(isAuthenticUser(username, password, "customer")) {//Login as admin 
 					dispatchRequest("CUSTOMER");
-				} 
+				} else {
+					System.out.print("Wrong username or password!!!\n");
+					System.out.println("**********************");
+					System.out.println("1- Login as admin");
+					System.out.println("2- Login as customer");
+					System.out.println("3- Exit Marketplace!");
+					System.out.println("**********************");
+					System.out.print("Please choose an option:\t");
+					option = input.nextInt();
+				}
               }
 
           } while (option != 3);
@@ -77,6 +95,7 @@ public class FrontController {
 	private boolean isAuthenticUser(String username, String password, String userRole) {
 		try{
 			if(userRole.equalsIgnoreCase("administrator")){
+				System.out.println("Client Exception: ");
 				try{
 				  session = server.processLogin(username, password, "administrator");
 				  System.out.println("Session is " + session.getRoleType());
@@ -88,13 +107,19 @@ public class FrontController {
 			}else{
 				try{
 				  session = server.processLogin(username, password, "customer");
+				  System.out.println("Session is " + session.getRoleType());
 				} catch(Exception e){
 					System.out.println("Client Exception: " + e.getMessage());
 				}
 				//loginStatus = server.loginCustomer(username, password); 
+			} 
+			if(session == null){
+				return false;
+			}else{
+				System.out.println("User is authenticated successfully.");	
+				System.out.println("Session is " + session.getRoleType());
+				return true;
 			}
-			System.out.println("User is authenticated successfully.");	 
-			return true;
 		 } catch (Exception e) {
             System.out.println("MarketPlaceClient Exception: "
                     + e.getMessage());

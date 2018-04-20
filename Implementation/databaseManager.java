@@ -60,10 +60,9 @@ public class databaseManager{
 		try {
 			conn = (Connection) 
 			DriverManager.getConnection(url, username, password);
-			System.out.println("Database connected!");
 			if(conn != null) {
 				Statement stmt = null;
-				
+				System.out.println("Database connected!");
 				try {
 					stmt = (Statement) 
 					conn.createStatement();

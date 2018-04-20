@@ -9,7 +9,9 @@
  * 
  * This is another variant of a checkbox.
  */
-public class AdministratorUser implements UserInterface {
+
+import java.io.Serializable;
+public class AdministratorUser  implements Serializable, UserInterface {
 
     private UserModel model;
 
@@ -36,9 +38,27 @@ public class AdministratorUser implements UserInterface {
 	 * @return user's type: admin or customer
 	 */
 	@Override 
-	public String login() {
-		//model.setLoginStatus(true);
-		return "admin logged in";
+	public String login() { 
+		String loginStatus = null;
+		try{
+			if(model.setLoginStatus(true))
+				loginStatus = "successfull";
+			
+		}catch(Exception e){
+			System.out.println("Database Exception:" + e.getMessage());
+		}
+		
+		return loginStatus;
+	}
+	
+	/**
+	 * Responsible for checking login status
+	 * 
+	 * @return user's status
+	 */
+	@Override 
+	public boolean getLoginStatus() { 
+		return model.getLoginStatus();
 	}
 
 	/**
@@ -84,47 +104,25 @@ public class AdministratorUser implements UserInterface {
 	}
 	
 	/**
-	 * Responsible for creating new administrator user
-	 * 
-	 * @param newModel
-	 * @return
-	 */
-	@Override
-	public void addAdmin(UserModel newModel) {
-		//return new AdministratorController(newModel);
-	}
-
-	/**
-	 * Responsible for removing Administrator account
-	 * 
-	 * @param administrator
-	 */
-	@Override
-	public void removeAdmin(AdministratorController administrator) {
-		administrator.deactivateAccount();
-	}
-
-	/**
 	 * Responsible for creating new Customer account
 	 * 
-	 * @param newModel
+	 * @param username, password
 	 * @return Customer' User
 	 */
 	@Override
-	public void addCustomer(UserModel newModel) {
-		CustomerController customerUser = new CustomerController(newModel);
-//		UserModel customerModel = getUser();
-//		customerModel.setType("customer");
-		//return customerUser;
+	public String addCustomer(String username, String password) {
+		return model.addUser(username, password, "customer");
 	}
 
 	/**
-	 * Deactivate customer account
+	 * Responsible for creating new Admin account
 	 * 
-	 * @param customer
+	 * @param username, password
+	 * @return Admin' User
 	 */
 	@Override
-	public void removeCustomer(CustomerController customer) {
-		customer.deactivateAccount();
+	public String addAdmin(String username, String password) {
+		String addStatus = model.addUser(username, password, "administrator");
+		return addStatus;
 	}
 }

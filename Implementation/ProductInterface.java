@@ -11,6 +11,12 @@ public interface ProductInterface {
 	public String showProductList();
 	
 	/**
+	*@param productId
+	* @return a product information in a String format
+	*/
+	public String selectProduct(int productId);
+	
+	/**
 	 * @return name of the product
 	 */
 	public String getName();
@@ -30,8 +36,7 @@ public interface ProductInterface {
 	 * @param newDescription
 	 * @param newQuantity
 	 */
-	public String updateDetails(String newName, double newPrice, String newDescription, int newQuantity);
-
+	public String updateProduct(int productIndex, String newName, float newPrice, String newDescription, int newQuantity);
 	/**
 	 * Responsible for creating new product
 	 * 
@@ -54,5 +59,5 @@ public interface ProductInterface {
 	 * 
 	 * @param
 	 */
-	public String deactivate();
+	public String deactivate(int productId);
 }

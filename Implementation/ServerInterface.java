@@ -24,17 +24,10 @@ public interface ServerInterface extends Remote {
 	 */
 
 	@RequiresRole("administrator")
-	public CustomerController createCustomer(SessionController session, String username, String password) throws RemoteException;
+	public String createCustomer(SessionController session, String username, String password) throws RemoteException;
 
 	@RequiresRole("administrator")
-	public AdministratorController createAdministrator(SessionController session, String username, String password) throws RemoteException;
-
-	@RequiresRole("administrator")
-	public void removeCustomer(SessionController session, AdministratorController admin, int customerIndex) throws RemoteException;
-
-	@RequiresRole("administrator")
-	public void removeAdministrator(SessionController session, AdministratorController admin, int adminIndex) throws RemoteException;
-
+	public String createAdministrator(SessionController session, String username, String password) throws RemoteException;
 	/*
 	 * User functions
 	 */
@@ -53,12 +46,10 @@ public interface ServerInterface extends Remote {
 	/*
 	 * Client specific functionalities with products
 	 */
-	 
-	@RequiresRole("customer")
 	public String showProductList(SessionController session) throws RemoteException;
 
 	@RequiresRole("customer")
-	public ProductController selectProduct(SessionController session, int productIndex) throws RemoteException;
+	public String selectProduct(SessionController session, int productIndex) throws RemoteException;
 
 	@RequiresRole("customer")
 	public String showProductDetails(SessionController session, int productIndex) throws RemoteException;
@@ -71,10 +62,10 @@ public interface ServerInterface extends Remote {
 			throws RemoteException;
 
 	@RequiresRole("administrator")
-	public void removeProduct(SessionController session, int productIndex) throws RemoteException;
+	public String removeProduct(SessionController session, int productIndex) throws RemoteException;
 
 	@RequiresRole("administrator")
-	public void updateProduct(SessionController session, int productIndex, String newName, double newPrice, String newDescription, int newQuantity)
+	public String updateProduct(SessionController session, int productIndex, String newName, float newPrice, String newDescription, int newQuantity)
 			throws RemoteException;
 	/*
 	 * Cart functions
@@ -85,9 +76,6 @@ public interface ServerInterface extends Remote {
 
 	@RequiresRole("customer")
 	public void showCartDetails(SessionController session, int cartIndex) throws RemoteException;
-
-	@RequiresRole("customer")
-	public void checkoutCart(SessionController session, CartController cart) throws RemoteException;
 	
 	public void concurrencyTest() throws RemoteException;
 	

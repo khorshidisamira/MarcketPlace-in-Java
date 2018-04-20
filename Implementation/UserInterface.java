@@ -16,12 +16,25 @@ public interface UserInterface {
 	public abstract String login();
 
 	/**
+	 * Responsible for checking login status
+	 * 
+	 * @return user's status
+	 */
+	public abstract boolean getLoginStatus();
+
+	
+	/**
 	 * Responsible for logout the User
 	 * 
 	 * @return Success message
 	 */
 	public abstract String logout();
-
+	
+	/**
+	 * Responsible for logout the User
+	 * 
+	 * @return Success message
+	 */
 	public abstract String deactivateAccount();
 	
 	public abstract void setInfo(String username, String password);
@@ -43,33 +56,21 @@ public interface UserInterface {
 	 */
 	public abstract boolean hasAccess(UserModel user, String right, String resource);
 
-	/**
-	 * Responsible for creating new administrator user
-	 * 
-	 * @param newModel
-	 * @return
-	 */
-	public abstract void addAdmin(UserModel newModel);
-
-	/**
-	 * Responsible for removing Administrator account
-	 * 
-	 * @param administrator
-	 */
-	public abstract void removeAdmin(AdministratorController administrator);
 
 	/**
 	 * Responsible for creating new Customer account
 	 * 
-	 * @param newModel
+	 * @param username,password
 	 * @return Customer' User
 	 */
-	public abstract void addCustomer(UserModel newModel);
+	public abstract String addCustomer(String username, String password);
 
 	/**
-	 * Deactivate customer account
+	 * Responsible for creating new Admin account
 	 * 
-	 * @param customer
+	 * @param username,password
+	 * @return Admin' User
 	 */
-	public abstract void removeCustomer(CustomerController customer);
+	public abstract String addAdmin(String username, String password);
+
 }

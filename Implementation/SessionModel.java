@@ -13,10 +13,11 @@ public class SessionModel implements Serializable {
 	private String userType;
 	private String role; 
 	
-	public SessionModel(String username, String type) {
+	public SessionModel(String username, String password, String type) {
 		this.userType = type;
 		this.role = type;
 		this.username = username;
+		this.password = password;
 	}
 	
 	public String getRoleType(){

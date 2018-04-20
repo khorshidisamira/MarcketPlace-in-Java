@@ -11,8 +11,9 @@ public class SessionController implements Serializable{
 	//Fixed: I added comments
 	private SessionModel model;
 	
-	public SessionController(String username, String type) {
-		this.model = new SessionModel(username, type);
+	
+	public SessionController(String username, String password, String type) {
+		this.model = new SessionModel(username, password, type);
 	}
 	
 	public String getRoleType(){

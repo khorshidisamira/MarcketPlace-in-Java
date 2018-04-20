@@ -13,11 +13,17 @@ To run the application successfully, follow the following steps:
 
 ps 1: rmiregistry  is using 60000 as its port, if you get error on make registry command, please find the PID of the rmiregistry with this port using "ps -ax|grep rmiregistry" and kill that process  
 
-ps 2: The only valid functionality is login, browse products, add a new product and add a product to shopping cart(purchase) other functions in serverController are not valid  
+ps 2: The following are valid functionalities:
+	• Customer/Administrators Login & Registration
+	• Browsing Items
+	• Updating Items
+	• Removing Items
+	• Adding Items
+	• Purchasing Items 
 
-ps 3: server.concurrencyTest(); is a function that is responsible for simulating cuncurrency, at the begining of creating each client, this method will be called and you can see the ip addres and the status of the client in server, it has delay inside it and it is just a test function of concurrency
-
-ps 4: You can use any username or password to login  
+ps 3: You can use the following are valid username/password for users:
+	Admin: username: admin, password: admin
+	Customer: username: customer, password:customer
 
 ps 5: Please run the server on in-csci-rrpc01.cs.iupui.edu machine  
 
@@ -53,12 +59,3 @@ FrontController.java: Single handler for all kinds of requests coming to the app
 Dispatcher.java: Front Controller uses dispatcher object which can dispatch the request to corresponding specific controller/view  
 AdminView.java: Plays view rule for administrator users  
 CustomerView.java: Plays view rule for customer users  
-  
-*the rest of the files are just part of the application that are going to be completed in future  
-
-
-
-
-
-
-

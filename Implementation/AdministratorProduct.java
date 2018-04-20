@@ -1,13 +1,8 @@
 /**
  * All products families have the same varieties (Administrator/Customer).
- * 
- * This is a MacOS variant of a button.
+ *
  */
-
-import java.io.Serializable;
-import java.sql.ResultSet;
-
-public class AdministratorProduct implements ProductInterface, Serializable { 
+public class AdministratorProduct implements ProductInterface { 
 
 	private ProductModel model = new ProductModel();
 	private databaseManager dbManager= new databaseManager();

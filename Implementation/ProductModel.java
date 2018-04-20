@@ -6,8 +6,6 @@
 
 import java.sql.ResultSet;
 public class ProductModel{
-	// Ryan: Please provide useful comments in each file.
-	//fixed: I added new comments
 	
 	private databaseManager dbManager = new databaseManager();
 	private String name;

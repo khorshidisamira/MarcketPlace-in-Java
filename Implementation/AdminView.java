@@ -34,17 +34,13 @@ public class AdminView {
 		do {
 			System.out.println("********************************");
 			System.out.println("*  1- Create a Customer        *");
-		//	System.out.println("*  2- Update a Customer        *");
-		//	System.out.println("*  3- Remove a Customer        *");
 			System.out.println("*           ----               *");
-			System.out.println("*  4- Create an Administrator  *");
-		//	System.out.println("*  5- Update an Administrator  *");
-		//	System.out.println("*  6- Remove an Administrator  *");
+			System.out.println("*  2- Create an Administrator  *");
 			System.out.println("*           ----               *");
-			System.out.println("*  7- Add new product          *");
-			System.out.println("*  8- Update a product         *");
-			System.out.println("*  9- Remove a product         *");
-			System.out.println("*  10- Logout from system      *");
+			System.out.println("*  3- Add new product          *");
+			System.out.println("*  4- Update a product         *");
+			System.out.println("*  5- Remove a product         *");
+			System.out.println("*  6- Logout from system      *");
 			System.out.println("********************************");
 			System.out.print("Please choose an option:\t");
 			option = input.nextInt();
@@ -69,21 +65,8 @@ public class AdminView {
 					System.out.print(e.getMessage());
 				}
 				break;
+		
 			case 2:
-				System.out.println("Updating a customer...");
-				System.out.print("Please enter a user id:\t");
-				userId = input.nextInt();
-				System.out.print("Please enter a new password:\t");
-				password = input.next();
-				// myMarketPlace.updateCustomer( userId, password);
-				break;
-			case 3:
-				System.out.println("Removing a customer...");
-				System.out.print("Please enter a user id:\t");
-				userId = input.nextInt();
-				// myMarketPlace.removeCustomer( myuUser, userId);
-				break;
-			case 4:
 				try{
 					System.out.println("Creating new Administrator...");
 					System.out.print("Please enter username:\t");
@@ -97,21 +80,8 @@ public class AdminView {
 					System.out.print(e.getMessage());
 				}
 				break;
-			case 5:
-				System.out.println("Updating an administrator...");
-				System.out.print("Please enter a user id:\t");
-				userId = input.nextInt();
-				System.out.print("Please enter a new password:\t");
-				password = input.next();
-				// myMarketPlace.updateAdmin( userId, password);
-				break;
-			case 6:
-				System.out.println("Removing an administrator...");
-				System.out.print("Please enter a user id:\t");
-				userId = input.nextInt();
-				// myMarketPlace.removeAdministrator( myuUser, userId);
-				break;
-			case 7:
+			
+			case 3:
 				try{
 					System.out.println("Adding new product...");
 					System.out.print("Please enter product name:\t");
@@ -130,7 +100,7 @@ public class AdminView {
 					System.out.print(e.getMessage());
 				}
 				break;
-			case 8:
+			case 4:
 				try{
 					System.out.println("Updating a product...");
 					System.out.println(myMarketPlace.showProductList(session));
@@ -152,7 +122,7 @@ public class AdminView {
 					System.out.print(e.getMessage());
 				}
 				break;
-			case 9:
+			case 5:
 				System.out.println("Removing a product...");
 				try{
 					System.out.println(myMarketPlace.showProductList(session));
@@ -164,10 +134,10 @@ public class AdminView {
 				}
 				break;
 
-			case 10:
+			case 6:
 				// myMarketPlace.logoutAdmin(myUser);
 			}
-		} while (option != 10/* myUser.getLoginStatus() */);
+		} while (option != 6/* myUser.getLoginStatus() */);
 	}
 
 }

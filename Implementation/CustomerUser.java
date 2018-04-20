@@ -14,11 +14,6 @@ public class CustomerUser implements UserInterface {
 	}
 
 	@Override
-	public UserModel getUser() {
-		return model;
-	}
-
-	@Override
 	public void setInfo(String username, String password) {
 		model.username = username;
 		model.password = password;

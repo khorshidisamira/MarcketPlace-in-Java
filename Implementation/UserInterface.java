@@ -5,8 +5,6 @@
 // Samira Khorshidi
 
 public interface UserInterface {
-	
-	public abstract UserModel getUser();
 
 	/**
 	 * Responsible for login user

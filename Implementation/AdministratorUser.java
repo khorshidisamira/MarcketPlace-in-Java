@@ -7,11 +7,10 @@
 /**
  * All products families have the same varieties (Administrator/Customer).
  * 
- * This is another variant of a checkbox.
+ * This is another variant of a user.
  */
 
-import java.io.Serializable;
-public class AdministratorUser  implements Serializable, UserInterface {
+public class AdministratorUser  implements UserInterface {
 
     private UserModel model;
 
@@ -21,11 +20,6 @@ public class AdministratorUser  implements Serializable, UserInterface {
 		this.model = new UserModel(username,password, "admin");
 	}
 
-	@Override
-	public UserModel getUser() {
-		return model;
-	}
-	
 	@Override
 	public void setInfo(String username, String password) {
 		model.username = username;

@@ -4,8 +4,7 @@
 //
 // Samira Khorshidi
 import java.sql.ResultSet;
-import java.io.Serializable;
-public class UserModel implements Serializable {
+public class UserModel {
 
 	private double userId;
 	private String firstName;

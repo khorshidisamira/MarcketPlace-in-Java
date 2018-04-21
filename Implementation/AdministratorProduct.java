@@ -5,7 +5,6 @@
 public class AdministratorProduct implements ProductInterface { 
 
 	private ProductModel model = new ProductModel();
-	private databaseManager dbManager= new databaseManager();
 	// private ArrayList<ProductModel> productList = new ArrayList<>(); //Holds
 	// system's products
 

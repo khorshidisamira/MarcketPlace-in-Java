@@ -1,4 +1,8 @@
-
+// Honor Pledge:
+//
+// I pledge that I have neither given nor received any help on this assignment.
+//
+// Samira Khorshidi
 /**
  * Each concrete factory extends basic factory and responsible for creating
  * products of a single variety.

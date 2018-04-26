@@ -1,3 +1,8 @@
+// Honor Pledge:
+//
+// I pledge that I have neither given nor received any help on this assignment.
+//
+// Samira Khorshidi
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
